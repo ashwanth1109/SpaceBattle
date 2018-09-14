@@ -103,6 +103,33 @@ uss.consoleLogShipValues();
 //   `You are now entering the battle with your ship to defend the earth against alien attack`
 // );
 
+//------------------------------------------ADDING FUNCTIONS FOR BUTTONS------------------------------------------
+
+const fight = () => {
+  console.log(`fight`);
+};
+const retreat = () => {
+  console.log(`retreat`);
+};
+const shootLaser = () => {
+  console.log(`laser`);
+};
+const createShield = () => {
+  console.log(`shield`);
+};
+
+//------------------------------------------ADDING CONTROLS USING BUTTONS------------------------------------------
+
+const fightButton = document.getElementById(`fight-button`);
+const retreatButton = document.getElementById(`retreat-button`);
+const laserButton = document.getElementById(`laser-button`);
+const shieldButton = document.getElementById(`shield-button`);
+
+fightButton.addEventListener(`click`, fight);
+retreatButton.addEventListener(`click`, retreat);
+laserButton.addEventListener(`click`, shootLaser);
+shieldButton.addEventListener(`click`, createShield);
+
 let action = null;
 let shipIndex = 0;
 let isGameOver = false;

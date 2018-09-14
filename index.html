@@ -12,7 +12,7 @@
 
 <body>
   <div class="bottom-header" id="game-title">
-    <p id="game-title-text">THE AGE OF SPACE WARS IS UPON US</p>
+    <p id="game-title-text">NEW GAME</p>
   </div>
   <div id="aliencontainer">
     <div class="alienship ship1">
@@ -51,8 +51,33 @@
       <div class="remaining-health"></div>
     </div>
   </div>
-  <div id="control-panel"></div>
-  <div id="log-panel"></div>
+  <div id="log-panel">
+    <div class="log-window">
+      <p id="logLine1">Welcome to Space Battle</p>
+      <p id="logLine2">Aliens are threatening earth</p>
+      <p id="logLine3">And you are our last hope</p>
+    </div>
+  </div>
+  <div id="control-panel">
+    <div class="flex-column-evenly">
+      <div class="flex-row-evenly">
+        <div class="control-buttons" id="fight-button">
+          <p>FIGHT</p>
+        </div>
+        <div class="control-buttons" id="retreat-button">
+          <p>RETREAT</p>
+        </div>
+      </div>
+      <div class="flex-row-evenly">
+        <div class="control-buttons" id="laser-button">
+          <p>LASER</p>
+        </div>
+        <div class="control-buttons" id="shield-button">
+          <p>SHIELD</p>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="./js/app.js"></script>
 </body>
 
