@@ -1,14 +1,20 @@
 //------------------------------------------GETTING ELEMENTS BY ID------------------------------------------
 
 let gameTitle = document.getElementById(`game-title`);
+let gameTitleText = document.getElementById(`game-title-text`);
 
+const makeTitleTextAppear = () => {
+  gameTitleText.style.opacity = 1;
+  gameTitleText.style.visibility = `visible`;
+};
 const makeTitleAppear = () => {
   gameTitle.style.width = "60vw";
+  setTimeout(makeTitleTextAppear, 2000);
 };
 
-// setTimeout(makeTitleAppear, 3000);
+setTimeout(makeTitleAppear, 1000);
 
-//------------------------------------------CORE CODE------------------------------------------
+//------------------------------------------JS CORE CODE------------------------------------------
 //------------------------------------------------------------------------------------
 
 //------------------------------------------CLASS TO CREATE SHIP------------------------------------------
@@ -93,9 +99,9 @@ uss.consoleLogShipValues();
 
 //------------------------------------------SIMULATE BATTLE------------------------------------------
 
-alert(
-  `You are now entering the battle with your ship to defend the earth against alien attack`
-);
+// alert(
+//   `You are now entering the battle with your ship to defend the earth against alien attack`
+// );
 
 let action = null;
 let shipIndex = 0;
@@ -126,23 +132,23 @@ const incrementShipIndexInLoop = () => {
   }
 };
 
-while (action !== `stop`) {
-  action = prompt(`What do you want to do?`, `stop or fight`);
-  if (action === `fight`) {
-    uss.attack(alienShips[shipIndex]);
-    alienShips[shipIndex].attack(uss);
-  }
-  incrementShipIndexInLoop();
-  if (checkIfGameIsOver()) {
-    if (uss.hull <= 0) {
-      console.log(`Oh no, the alien ships won. Earth is gonna be destroyed`);
-    } else {
-      console.log(
-        `Congratulations, ${
-          uss.name
-        } has saved the day. The alien ships have all been destroyed`
-      );
-    }
-    action = `stop`;
-  }
-}
+// while (action !== `stop`) {
+//   action = prompt(`What do you want to do?`, `stop or fight`);
+//   if (action === `fight`) {
+//     uss.attack(alienShips[shipIndex]);
+//     alienShips[shipIndex].attack(uss);
+//   }
+//   incrementShipIndexInLoop();
+//   if (checkIfGameIsOver()) {
+//     if (uss.hull <= 0) {
+//       console.log(`Oh no, the alien ships won. Earth is gonna be destroyed`);
+//     } else {
+//       console.log(
+//         `Congratulations, ${
+//           uss.name
+//         } has saved the day. The alien ships have all been destroyed`
+//       );
+//     }
+//     action = `stop`;
+//   }
+// }
