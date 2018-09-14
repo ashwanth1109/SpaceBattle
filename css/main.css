@@ -44,3 +44,23 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+#aliencontainer {
+  position: absolute;
+  top: 15vh;
+  left: 20vw;
+  width: 60vw;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.alienship {
+  width: 100%;
+  height: 100%;
+  background-image: url(../img/ufo.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
