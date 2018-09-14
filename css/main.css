@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Bitter");
 body {
   width: 100vw;
   height: 100vh;
@@ -9,11 +10,20 @@ body {
 }
 .bottom-header {
   position: absolute;
-  background-color: #fff;
+  background-color: #442b48;
   width: 60vw;
   height: 8vh;
   bottom: 10vh;
   left: 20vw;
   right: 20vw;
   border-radius: 10vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: width 3s ease-in-out;
+}
+.bottom-header p {
+  color: white;
+  font-family: "Bitter", serif;
+  font-size: 2vw;
 }
