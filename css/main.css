@@ -138,10 +138,10 @@ body {
 
 #log-panel {
   width: 40vw;
-  height: 20vh;
+  height: 40vh;
   background-color: #333;
   position: absolute;
-  top: 60vh;
+  top: 40vh;
   left: 2vw;
   border-radius: 10px;
   display: flex;
