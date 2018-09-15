@@ -1,4 +1,4 @@
-//------------------------------------------GETTING ELEMENTS BY ID------------------------------------------
+//------------------------------------------MAKING TITLE TRANSITION INTO VIEW------------------------------------------
 
 let gameTitle = document.getElementById(`game-title`);
 let gameTitleText = document.getElementById(`game-title-text`);
@@ -13,6 +13,11 @@ const makeTitleAppear = () => {
 };
 
 setTimeout(makeTitleAppear, 1000);
+
+//------------------------------------------GETTING LOG ELEMENTS------------------------------------------
+const logLine1 = document.getElementById(`log-line1`);
+const logLine2 = document.getElementById(`log-line2`);
+const logLine3 = document.getElementById(`log-line3`);
 
 //------------------------------------------JS CORE CODE------------------------------------------
 //------------------------------------------------------------------------------------
@@ -35,16 +40,27 @@ class Ship {
     if (this.accuracy >= random && this.hull > 0) {
       isHitSuccesful = true;
     }
+    let log1, log2, log3;
     if (isHitSuccesful) {
-      console.log(`Attack from ${this.name} on ${opponent.name} was succesful`);
+      log1 = `${this.name} successfully hit ${opponent.name}`;
       opponent.hull -= this.firepower;
-      console.log(`${opponent.name}'s health is now ${opponent.hull}`);
+      if (opponent.hull < 0) opponent.hull = 0;
+      log2 = `${opponent.name}'s health is now ${opponent.hull}`;
+      if (opponent.id === 0) {
+        log3 = `You can choose to attack or retreat`;
+      } else {
+        log3 = `Waiting for ${opponent.name} to attack now`;
+      }
     } else {
-      console.log(
-        `Attack from ${this.name} on ${opponent.name} was unsuccesful`
-      );
-      console.log(`${opponent.name}'s health is still at ${opponent.hull}`);
+      log1 = `${this.name} failed to hit ${opponent.name}`;
+      log2 = `${opponent.name}'s health is still at ${opponent.hull}`;
+      if (opponent.id === 0) {
+        log3 = `You can choose to attack or retreat`;
+      } else {
+        log3 = `Waiting for ${opponent.name} to attack now`;
+      }
     }
+    this.logShipValues(log1, log2, log3);
   }
 
   generateRandomIntFromRange(min, max) {
@@ -76,6 +92,12 @@ class Ship {
     console.log(`${this.name}'s firepower value is ${this.firepower}`);
     console.log(`${this.name}'s accuracy value is ${this.accuracy}`);
   }
+
+  logShipValues(log1, log2, log3) {
+    logLine1.innerText = log1;
+    logLine2.innerText = log2;
+    logLine3.innerText = log3;
+  }
 }
 
 //------------------------------------------GENERATE ALIEN SHIPS USING FACTORY------------------------------------------
@@ -83,7 +105,7 @@ class Ship {
 const alienShipFactory = numberOfShips => {
   let alienShips = [];
   for (let i = 1; i <= numberOfShips; i++) {
-    const shipName = `Alien Spaceship ${i}`;
+    const shipName = `TIE FIGHTER ${i}`;
     const alienShip = new Ship(shipName);
     alienShip.randomizeHullValue(3, 6);
     alienShip.randomizeFirepowerValue(2, 4);
@@ -99,7 +121,7 @@ const alienShips = alienShipFactory(6);
 
 //------------------------------------------GENERATE USS SCHWARZENEGGAR------------------------------------------
 
-const uss = new Ship(`USS SCHWARZENEGGAR`, 20, 5, 0.7);
+const uss = new Ship(`X WING`, 20, 5, 0.7);
 uss.consoleLogShipValues();
 
 //------------------------------------------GETTING HEALTH BAR ELEMENTS------------------------------------------
@@ -128,11 +150,6 @@ alienShips[2].healthBarElement = alienHealth3;
 alienShips[3].healthBarElement = alienHealth4;
 alienShips[4].healthBarElement = alienHealth5;
 alienShips[5].healthBarElement = alienHealth6;
-
-//------------------------------------------GETTING LOG ELEMENTS------------------------------------------
-const logLine1 = document.getElementById(`log-line1`);
-const logLine2 = document.getElementById(`log-line1`);
-const logLine3 = document.getElementById(`log-line3`);
 
 //------------------------------------------SIMULATE BATTLE------------------------------------------
 
@@ -186,11 +203,18 @@ const logGameOverMessage = () => {
 
 //------------------------------------------ADDING FUNCTIONS FOR BUTTONS------------------------------------------
 
-const fight = () => {
+const ussAttack = () => {
   uss.attack(alienShips[shipIndex]);
   updateHealth(alienShips[shipIndex]);
+};
+const alienAttack = () => {
   alienShips[shipIndex].attack(uss);
   updateHealth(uss);
+};
+
+const fight = () => {
+  ussAttack();
+  setTimeout(alienAttack, 5000);
   incrementShipIndexInLoop();
   if (checkIfGameIsOver()) {
     if (uss.hull <= 0) {
