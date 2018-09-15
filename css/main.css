@@ -95,6 +95,7 @@ body {
   width: 10vw;
   background-color: #2ecc71;
   height: 2vh;
+  transition: width 3s ease-in-out;
 }
 
 #control-panel {

@@ -24,6 +24,9 @@ class Ship {
     this.hull = hull;
     this.firepower = firepower;
     this.accuracy = accuracy;
+    this.healthBarElement = null;
+    this.maxHP = hull;
+    this.id = 0;
   }
 
   attack(opponent) {
@@ -57,6 +60,7 @@ class Ship {
 
   randomizeHullValue(min, max) {
     this.hull = this.generateRandomIntFromRange(min, max);
+    this.maxHP = this.hull;
   }
 
   randomizeFirepowerValue(min, max) {
@@ -85,6 +89,7 @@ const alienShipFactory = numberOfShips => {
     alienShip.randomizeFirepowerValue(2, 4);
     alienShip.randomizeAccuracy(0.6, 0.8);
     alienShip.consoleLogShipValues();
+    alienShip.id = i;
     alienShips.push(alienShip);
   }
   return alienShips;
@@ -97,38 +102,43 @@ const alienShips = alienShipFactory(6);
 const uss = new Ship(`USS SCHWARZENEGGAR`, 20, 5, 0.7);
 uss.consoleLogShipValues();
 
+//------------------------------------------GETTING HEALTH BAR ELEMENTS------------------------------------------
+
+const spaceshipHealth = document.getElementById(`spaceship-health`);
+const alienHealth1 = document.getElementById(`alienship-health1`);
+const alienHealth2 = document.getElementById(`alienship-health2`);
+const alienHealth3 = document.getElementById(`alienship-health3`);
+const alienHealth4 = document.getElementById(`alienship-health4`);
+const alienHealth5 = document.getElementById(`alienship-health5`);
+const alienHealth6 = document.getElementById(`alienship-health6`);
+let healthBar = [
+  spaceshipHealth,
+  alienHealth1,
+  alienHealth2,
+  alienHealth3,
+  alienHealth4,
+  alienHealth5,
+  alienHealth6
+];
+
+uss.healthBarElement = spaceshipHealth;
+alienShips[0].healthBarElement = alienHealth1;
+alienShips[1].healthBarElement = alienHealth2;
+alienShips[2].healthBarElement = alienHealth3;
+alienShips[3].healthBarElement = alienHealth4;
+alienShips[4].healthBarElement = alienHealth5;
+alienShips[5].healthBarElement = alienHealth6;
+
+//------------------------------------------GETTING LOG ELEMENTS------------------------------------------
+const logLine1 = document.getElementById(`log-line1`);
+const logLine2 = document.getElementById(`log-line1`);
+const logLine3 = document.getElementById(`log-line3`);
+
 //------------------------------------------SIMULATE BATTLE------------------------------------------
 
 // alert(
 //   `You are now entering the battle with your ship to defend the earth against alien attack`
 // );
-
-//------------------------------------------ADDING FUNCTIONS FOR BUTTONS------------------------------------------
-
-const fight = () => {
-  console.log(`fight`);
-};
-const retreat = () => {
-  console.log(`retreat`);
-};
-const shootLaser = () => {
-  console.log(`laser`);
-};
-const createShield = () => {
-  console.log(`shield`);
-};
-
-//------------------------------------------ADDING CONTROLS USING BUTTONS------------------------------------------
-
-const fightButton = document.getElementById(`fight-button`);
-const retreatButton = document.getElementById(`retreat-button`);
-const laserButton = document.getElementById(`laser-button`);
-const shieldButton = document.getElementById(`shield-button`);
-
-fightButton.addEventListener(`click`, fight);
-retreatButton.addEventListener(`click`, retreat);
-laserButton.addEventListener(`click`, shootLaser);
-shieldButton.addEventListener(`click`, createShield);
 
 let action = null;
 let shipIndex = 0;
@@ -159,23 +169,60 @@ const incrementShipIndexInLoop = () => {
   }
 };
 
-// while (action !== `stop`) {
-//   action = prompt(`What do you want to do?`, `stop or fight`);
-//   if (action === `fight`) {
-//     uss.attack(alienShips[shipIndex]);
-//     alienShips[shipIndex].attack(uss);
-//   }
-//   incrementShipIndexInLoop();
-//   if (checkIfGameIsOver()) {
-//     if (uss.hull <= 0) {
-//       console.log(`Oh no, the alien ships won. Earth is gonna be destroyed`);
-//     } else {
-//       console.log(
-//         `Congratulations, ${
-//           uss.name
-//         } has saved the day. The alien ships have all been destroyed`
-//       );
-//     }
-//     action = `stop`;
-//   }
-// }
+const updateHealth = ship => {
+  let healthValue = Math.round((ship.hull / ship.maxHP) * 10);
+  if (healthValue < 0) {
+    healthValue = 0;
+  }
+  console.log(healthBar[ship.id]);
+  healthBar[ship.id].style.width = `${healthValue}vw`;
+  // console.log(ship.healthBarElement.firstChild.nextSibling);
+  // ship.healthBarElement.firstChild.nextSibling.style.width = `${healthValue}vw`;
+};
+
+const logGameOverMessage = () => {
+  console.log(`Game Over`);
+};
+
+//------------------------------------------ADDING FUNCTIONS FOR BUTTONS------------------------------------------
+
+const fight = () => {
+  uss.attack(alienShips[shipIndex]);
+  updateHealth(alienShips[shipIndex]);
+  alienShips[shipIndex].attack(uss);
+  updateHealth(uss);
+  incrementShipIndexInLoop();
+  if (checkIfGameIsOver()) {
+    if (uss.hull <= 0) {
+      console.log(`Oh no, the alien ships won. Earth is gonna be destroyed`);
+    } else {
+      console.log(
+        `Congratulations, ${
+          uss.name
+        } has saved the day. The alien ships have all been destroyed`
+      );
+    }
+    logGameOverMessage();
+  }
+};
+const retreat = () => {
+  console.log(`retreat`);
+};
+const shootLaser = () => {
+  console.log(`laser`);
+};
+const createShield = () => {
+  console.log(`shield`);
+};
+
+//------------------------------------------ADDING CONTROLS USING BUTTONS------------------------------------------
+
+const fightButton = document.getElementById(`fight-button`);
+const retreatButton = document.getElementById(`retreat-button`);
+const laserButton = document.getElementById(`laser-button`);
+const shieldButton = document.getElementById(`shield-button`);
+
+fightButton.addEventListener(`click`, fight);
+retreatButton.addEventListener(`click`, retreat);
+laserButton.addEventListener(`click`, shootLaser);
+shieldButton.addEventListener(`click`, createShield);
