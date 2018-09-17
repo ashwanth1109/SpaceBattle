@@ -203,14 +203,15 @@ const fight = () => {
   alienAttack();
   incrementShipIndexInLoop();
   if (checkIfGameIsOver()) {
+    logLine1.innerText = `Game Over`;
     if (uss.hull <= 0) {
-      console.log(`Oh no, the alien ships won. Earth is gonna be destroyed`);
+      logLine2.innerText = `Oh no, the alien ships won.`;
+      logLine3.innerText = `Earth is gonna be destroyed`;
+      logLine4.innerText = `Better Luck next time`;
     } else {
-      console.log(
-        `Congratulations, ${
-        uss.name
-        } has saved the day. The alien ships have all been destroyed`
-      );
+      logLine2.innerText = `Congratulations, ${uss.name} has saved the day.`;
+      logLine3.innerText = `The alien ships have all been destroyed`;
+      logLine4.innerText = `You can return home for your heroic welcome`;
     }
     logGameOverMessage();
   }
