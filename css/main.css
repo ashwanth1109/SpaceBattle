@@ -118,6 +118,18 @@ body {
   align-items: center;
   border-radius: 10px;
   cursor: pointer;
+  position: relative;
+}
+.disabled {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 10px;
+  cursor: initial;
+  background-color: #333333aa;
 }
 .control-buttons p {
   color: #333;
