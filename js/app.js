@@ -161,9 +161,21 @@ const checkIfGameIsOver = () => {
 };
 
 const incrementShipIndexInLoop = () => {
-  shipIndex++;
-  if (shipIndex === alienShips.length) {
+  if (shipIndex === alienShips.length - 1) {
     shipIndex = 0;
+  } else {
+    shipIndex++;
+  }
+  while (!checkIfGameIsOver() && alienShips[shipIndex].hull === 0) {
+    console.log(
+      `Ship Index ${shipIndex} hull value is ${alienShips[shipIndex].hull}`
+    );
+    console.log(`Moving to next ship`);
+    if (shipIndex === alienShips.length - 1) {
+      shipIndex = 0;
+    } else {
+      shipIndex++;
+    }
   }
 };
 
